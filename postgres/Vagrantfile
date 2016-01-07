@@ -17,6 +17,8 @@ config.vm.hostname = 'postgres1'
     provider.image = 'ubuntu-15-10-x64' #'ubuntu-14-04-x64'
     provider.region = 'nyc2'
     provider.size = '512mb'
+    provider.setup = true
   end
+config.ssh.username = 'postgres'
 config.vm.provision :shell, path: "init.sh"
 end
