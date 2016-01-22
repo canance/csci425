@@ -25,3 +25,15 @@ sudo -u postgres psql book -c "create extension pg_trgm;"
 
 # Set postgres password
 sudo -u postgres psql book -c "ALTER User postgres WITH PASSWORD 'csci425';"
+
+# Download book code
+cd /home/postgres
+wget http://media.pragprog.com/titles/rwdata/code/rwdata-code.tgz
+tar xvf rwdata-code.tgz code/postgres --strip-components=2
+chown postgres:postgres *.sql
+rm rwdata-code.tgz
+
+# copy authorized_keys
+mkdir /home/postgres/.ssh
+cp /root/.ssh/authorized_keys /home/postgres/.ssh/authorized_keys
+chown -R postgres:postgres /home/postgres/.ssh

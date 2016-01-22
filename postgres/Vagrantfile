@@ -22,6 +22,8 @@ config.vm.hostname = 'postgres1'
     provider.size = '512mb'
     provider.setup = true
   end
+
+config.vm.synced_folder ".", "/home/postgres", type: "rsync", rsync__exclude: ".git/"
 config.ssh.username = 'postgres'
 config.vm.provision :shell, path: "init.sh"
 end
