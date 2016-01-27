@@ -37,3 +37,6 @@ rm rwdata-code.tgz
 mkdir /home/postgres/.ssh
 cp /root/.ssh/authorized_keys /home/postgres/.ssh/authorized_keys
 chown -R postgres:postgres /home/postgres/.ssh
+
+# fix permissions on home dir
+chmod 700 /home/postgres
