@@ -48,7 +48,7 @@ EOSU
 # Download book code
 cd /home/riak
 sudo -u riak wget http://media.pragprog.com/titles/rwdata/code/rwdata-code.tgz
-tar xvf rwdata-code.tgz code/riak --strip-components=2
+sudo -u riak tar xvf rwdata-code.tgz code/riak --strip-components=2
 sudo -u riak wget http://www.naumik.com/3d/antibiotics.jpg
 rm rwdata-code.tgz
 
@@ -64,3 +64,9 @@ chmod +x {start_,stop_}dev.sh
 # Install riak and json driver
 gem install riak-client -v 1.0.2
 gem install json
+
+# Configure riak js_source_dir
+sudo -u riak mkdir /home/riak/js_source
+sed -i 's/%{js_source_dir, "\/tmp\/js_source"},/{js_source_dir, "\/home\/riak\/js_source"},/g' ~riak/riak/dev/dev1/etc/app.config
+sed -i 's/%{js_source_dir, "\/tmp\/js_source"},/{js_source_dir, "\/home\/riak\/js_source"},/g' ~riak/riak/dev/dev2/etc/app.config
+sed -i 's/%{js_source_dir, "\/tmp\/js_source"},/{js_source_dir, "\/home\/riak\/js_source"},/g' ~riak/riak/dev/dev3/etc/app.config
