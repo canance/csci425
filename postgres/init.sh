@@ -1,3 +1,13 @@
+#!/usr/bin/env bash
+#title           :init.sh
+#description     :This script will provision ubuntu 15.10 with postgreSQL, download book source code, as well as supplemental files.
+#author		 :Cory Nance
+#date            :20160131
+#version         :0.3    
+#usage		 :bash init.sh
+
+
+
 # Update
 export DEBIAN_FRONTEND=noninteractive 
 apt-get update
