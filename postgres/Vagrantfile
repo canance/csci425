@@ -10,7 +10,11 @@ config.vm.hostname = 'postgres1'
   # Alternatively, use provider.name below to set the Droplet name. config.vm.hostname takes precedence.
 
   config.vm.provider :digital_ocean do |provider, override|
-    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    if ENV['VAGRANT_KEYPATH'] != nil
+      override.ssh.private_key_path = ENV['VAGRANT_KEYPATH']
+    else
+      override.ssh.private_key_path = '~/.ssh/id_rsa'
+    end
     override.vm.box = 'digital_ocean'
     override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
     provider.token = ENV['DIGITAL_OCEAN_TOKEN']
