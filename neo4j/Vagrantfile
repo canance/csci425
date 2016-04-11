@@ -1,0 +1,33 @@
+#-*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+config.vm.hostname = 'neo4j'
+config.vm.synced_folder ".", "/home/neo4j", type: "rsync", rsync__exclude: ".git/ init.sh Vagrantfile"
+
+# Alternatively, use provider.name below to set the Droplet name. config.vm.hostname takes precedence.
+
+config.vm.provider :digital_ocean do |provider, override|
+    if ENV['VAGRANT_KEYPATH'] != nil
+      override.ssh.private_key_path = ENV['VAGRANT_KEYPATH']
+    else
+      override.ssh.private_key_path = '~/.ssh/id_rsa'
+    end
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+    provider.token = ENV['DIGITAL_OCEAN_TOKEN']
+    if ENV['DIGITAL_OCEAN_KEY'] != nil
+      provider.ssh_key_name = ENV['DIGITAL_OCEAN_KEY']
+    end
+    provider.image = 'ubuntu-14-04-x64'
+    provider.region = 'nyc2'
+    provider.size = '512mb'
+    provider.setup = true
+end
+config.ssh.username = 'neo4j'
+config.vm.provision :shell, path: "init.sh"
+end
