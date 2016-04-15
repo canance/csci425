@@ -52,7 +52,7 @@ gem install json farady &>/dev/null
 # install neo4j
 # debian.neo4j.org
 echo "Installing NEO4J-Enterprise version 1.9.1..."
-wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add - &>/dev/null
+wget -O - https://debian.neo4j.org/neotechnology.gpg.key &>/dev/null | sudo apt-key add - &>/dev/null
 echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 mv /tmp/neo4j.list /etc/apt/sources.list.d
 apt-get update &>/dev/null
@@ -63,7 +63,7 @@ echo "Installing Gremlin..."
 cd /home/neo4j
 sudo -u neo4j wget https://github.com/downloads/tinkerpop/gremlin/gremlin-groovy-2.0.0.zip &>/dev/null
 sudo -u neo4j unzip gremlin-groovy-2.0.0.zip &>/dev/null
-sudo -u neo4j echo alias gremlin=\"bash /home/neo4j/gremlin-groovy-2.0.0/gremlin-groovy.sh\" >> /home/neo4j/.bashrc
+sudo -u neo4j echo alias gremlin=\"bash /home/neo4j/gremlin-groovy-2.0.0/gremlin-groovy.sh\" >> /home/neo4j/.bash_profile
 
 # reboot
 echo "A reboot is required ..." 1>&2
