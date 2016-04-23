@@ -9,13 +9,13 @@
 # Update
 export DEBIAN_FRONTEND=noninteractive
 echo "Updating the system..."
-apt-get update &>/dev/null
-apt-get upgrade -y &>/dev/null
+apt-get update 
+apt-get upgrade -y 
 
 # Configure SSH
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/#UseLogin no/UseLogin yes/g' /etc/ssh/sshd_config
-service ssh restart &>/dev/null
+service ssh restart 
 
 # Create swapfile
 fallocate -l 2GB /swapfile
@@ -33,11 +33,11 @@ echo "session    required   pam_limits.so" >> /etc/pam.d/common-session-noninter
 # Download book code and supplemental files
 cd /home/neo4j
 echo "Downloading book code..."
-sudo -u neo4j wget http://media.pragprog.com/titles/rwdata/code/rwdata-code.tgz &>/dev/null
-sudo -u neo4j tar xvf rwdata-code.tgz code/neo4j --strip-components=2 &>/dev/null
+sudo -u neo4j wget http://media.pragprog.com/titles/rwdata/code/rwdata-code.tgz 
+sudo -u neo4j tar xvf rwdata-code.tgz code/neo4j --strip-components=2 
 rm rwdata-code.tgz
 echo "Downloading performance.tsv..."
-sudo -u neo4j wget http://ci.coastal.edu/~canance/7dbs7wks/performance.tsv &>/dev/null
+sudo -u neo4j wget http://ci.coastal.edu/~canance/7dbs7wks/performance.tsv 
 
 # copy authorized_keys
 mkdir -p /home/neo4j/.ssh
@@ -46,23 +46,23 @@ chown -R neo4j:neo4j /home/neo4j/.ssh
 chmod 700 /home/neo4j
 
 echo "Installing Ruby and gems..."
-apt-get install build-essential ruby ruby-dev unzip -y &>/dev/null
-gem install json farady &>/dev/null
+apt-get install build-essential ruby ruby-dev unzip -y 
+gem install json faraday 
 
 # install neo4j
 # debian.neo4j.org
 echo "Installing NEO4J-Enterprise version 1.9.1..."
-wget -O - https://debian.neo4j.org/neotechnology.gpg.key &>/dev/null | sudo apt-key add - &>/dev/null
+wget -O - https://debian.neo4j.org/neotechnology.gpg.key  | sudo apt-key add - 
 echo 'deb http://debian.neo4j.org/repo stable/' > /tmp/neo4j.list
 mv /tmp/neo4j.list /etc/apt/sources.list.d
-apt-get update &>/dev/null
-apt-get install neo4j-enterprise=1.9.1 -y &>/dev/null
+apt-get update 
+apt-get install neo4j-enterprise=1.9.1 -y
 
 # install gremlin
 echo "Installing Gremlin..."
 cd /home/neo4j
-sudo -u neo4j wget https://github.com/downloads/tinkerpop/gremlin/gremlin-groovy-2.0.0.zip &>/dev/null
-sudo -u neo4j unzip gremlin-groovy-2.0.0.zip &>/dev/null
+sudo -u neo4j wget https://github.com/downloads/tinkerpop/gremlin/gremlin-groovy-2.0.0.zip 
+sudo -u neo4j unzip gremlin-groovy-2.0.0.zip 
 sudo -u neo4j echo alias gremlin=\"bash /home/neo4j/gremlin-groovy-2.0.0/gremlin-groovy.sh\" >> /home/neo4j/.bash_profile
 
 # reboot
